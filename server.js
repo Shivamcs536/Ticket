@@ -28,7 +28,7 @@ app.post('/create', (req, res) => {
   });
 });
 
-// View all tickets
+
 app.get('/tickets', (req, res) => {
   db.query('SELECT * FROM tickets', (err, results) => {
     if (err) throw err;
@@ -79,5 +79,5 @@ app.get('/delete/:id', (req, res) => {
   });
 });
 
-// Start Server
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
