@@ -3,7 +3,6 @@ const mysql = require('mysql2');
 const app = express();
 const PORT = 3000;
 
-// MySQL Connection
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -13,14 +12,14 @@ const db = mysql.createConnection({
 
 db.connect(err => err ? console.error(err) : console.log('MySQL Connected'));
 
-// Middleware
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// Routes
+
 app.get('/', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 
-// Create a ticket
+
 app.post('/create', (req, res) => {
   const { title, description } = req.body;
   db.query('INSERT INTO tickets (title, description) VALUES (?, ?)', [title, description], err => {
@@ -44,7 +43,7 @@ app.get('/tickets', (req, res) => {
   });
 });
 
-// Edit a ticket
+
 app.get('/edit/:id', (req, res) => {
   const { id } = req.params;
   db.query('SELECT * FROM tickets WHERE id = ?', [id], (err, results) => {
@@ -62,7 +61,7 @@ app.get('/edit/:id', (req, res) => {
   });
 });
 
-// Update a ticket
+
 app.post('/update/:id', (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
@@ -72,7 +71,6 @@ app.post('/update/:id', (req, res) => {
   });
 });
 
-// Delete a ticket
 app.get('/delete/:id', (req, res) => {
   const { id } = req.params;
   db.query('DELETE FROM tickets WHERE id = ?', [id], err => {
